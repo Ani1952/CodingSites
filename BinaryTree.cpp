@@ -173,10 +173,14 @@ int printAtLevel(Node *root, Node *target, int k)
     if (DL != -1)
     {
         if (DL + 1 == k)
+        {
             cout << root->data << " ";
+        }
 
         else
+        {
             helpPrintAtLevel(root->right, k - 2 - DL);
+        }
         return DL + 1;
     }
 
@@ -184,10 +188,14 @@ int printAtLevel(Node *root, Node *target, int k)
     if (DL != -1)
     {
         if (DL + 1 == k)
+        {
             cout << root->data << " ";
+        }
 
         else
+        {
             helpPrintAtLevel(root->left, k - 2 - DL);
+        }
         return DL + 1;
     }
 
@@ -241,9 +249,8 @@ int main()
     Pair p = maxSubsetSum(root);
     cout <<"Max Sum : "<< max(p.inc, p.exc) <<endl;*/
 
-
-    Node *target=root->left->right;
-    cout << printAtLevel(root,target,2) << " ";
+    Node *target = root->left->right;
+    cout << printAtLevel(root, target, 2) << " ";
 
     return 0;
 }
