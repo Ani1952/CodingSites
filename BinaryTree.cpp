@@ -22,11 +22,11 @@ public:
     int h;
 };
 
-class Pair{
+class Pair
+{
 public:
-	int inc;
-	int exc;
-
+    int inc;
+    int exc;
 };
 
 Node *levelbiuld()
@@ -127,22 +127,72 @@ pair<int, bool> isBalanced(Node *root)
     return make_pair(h, false);
 }
 
-Pair maxSubsetSum(Node* root){
-	Pair p;
-	if(root==NULL){
-		p.inc = p.exc = 0;
-		return p;
-	}
+Pair maxSubsetSum(Node *root)
+{
+    Pair p;
+    if (root == NULL)
+    {
+        p.inc = p.exc = 0;
+        return p;
+    }
 
-	Pair Left = maxSubsetSum(root->left);
-	Pair Right = maxSubsetSum(root->right);
+    Pair Left = maxSubsetSum(root->left);
+    Pair Right = maxSubsetSum(root->right);
 
-	p.inc = root->data + Left.exc + Right.exc;
-	p.exc = max(Left.inc,Left.exc) + max(Right.inc,Right.exc);
+    p.inc = root->data + Left.exc + Right.exc;
+    p.exc = max(Left.inc, Left.exc) + max(Right.inc, Right.exc);
 
-	return p;
+    return p;
 }
 
+void helpPrintAtLevel(Node *root, int k)
+{
+    if (root == NULL)
+        return;
+    if (k == 0)
+    {
+        cout << root->data << " ";
+        return;
+    }
+    helpPrintAtLevel(root->left, k - 1);
+    helpPrintAtLevel(root->right, k - 1);
+    return;
+}
+
+int printAtLevel(Node *root, Node *target, int k)
+{
+    if (root == NULL)
+        return -1;
+    if (root == target)
+    {
+        helpPrintAtLevel(target, k);
+        return 0;
+    }
+
+    int DL = printAtLevel(root->left, target, k);
+    if (DL != -1)
+    {
+        if (DL + 1 == k)
+            cout << root->data << " ";
+
+        else
+            helpPrintAtLevel(root->right, k - 2 - DL);
+        return DL + 1;
+    }
+
+    int DR = printAtLevel(root->right, target, k);
+    if (DL != -1)
+    {
+        if (DL + 1 == k)
+            cout << root->data << " ";
+
+        else
+            helpPrintAtLevel(root->left, k - 2 - DL);
+        return DL + 1;
+    }
+
+    return -1;
+}
 void print(Node *root)
 {
     queue<Node *> q;
@@ -179,7 +229,7 @@ int main()
     Node *root = levelbiuld();
     print(root);
 
-    replaceWithSum(root);
+    /*replaceWithSum(root);
     cout << endl;
     print(root);
 
@@ -189,7 +239,11 @@ int main()
     (isBalanced(root).second) ? cout << "True\n" : cout << "False\n";
 
     Pair p = maxSubsetSum(root);
-	cout <<"Max Sum : "<< max(p.inc, p.exc) <<endl;
-    
+    cout <<"Max Sum : "<< max(p.inc, p.exc) <<endl;*/
+
+
+    Node *target=root->left->right;
+    cout << printAtLevel(root,target,2) << " ";
+
     return 0;
 }
