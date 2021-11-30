@@ -201,7 +201,7 @@ int printAtLevel(Node *root, Node *target, int k)
 
     return -1;
 }
-void print(Node *root)
+void LevelOrder(Node *root)
 {
     queue<Node *> q;
     q.push(root);
@@ -232,10 +232,48 @@ void print(Node *root)
     return;
 }
 
+/*void SiblingSwap(Node *root)
+{
+    if (root == NULL)
+        return;
+    Node *temp;
+    temp = root->left;
+    root->left = root->right;
+    root->right = temp;
+    SiblingSwap(root->left);
+    SiblingSwap(root->right);
+}*/
+void traverse(Node *root, int d, map<int, vector<int>> &m)
+{
+    if (root == NULL)
+        return;
+    m[d].push_back(root->data);
+    traverse(root->left, d - 1, m);
+    traverse(root->right, d + 1, m);
+}
+
+void VerticalOrder(Node *root)
+{
+    map<int, vector<int>> m;
+    int d = 0;
+    traverse(root, d, m);
+    for (auto pair : m)
+    {
+        int k = pair.first;
+        vector<int> vec = pair.second;
+        for (auto line : vec)
+            cout << line << endl;
+    }
+    return;
+}
+
 int main()
 {
     Node *root = levelbiuld();
-    print(root);
+    LevelOrder(root);
+    // VerticalOrder(root);
+
+    
 
     /*replaceWithSum(root);
     cout << endl;
@@ -247,10 +285,10 @@ int main()
     (isBalanced(root).second) ? cout << "True\n" : cout << "False\n";
 
     Pair p = maxSubsetSum(root);
-    cout <<"Max Sum : "<< max(p.inc, p.exc) <<endl;*/
+    cout <<"Max Sum : "<< max(p.inc, p.exc) <<endl;
 
     Node *target = root->left->right;
-    cout << printAtLevel(root, target, 2) << " ";
+    cout << printAtLevel(root, target, 2) << " ";*/
 
     return 0;
 }
