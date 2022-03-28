@@ -2,11 +2,11 @@
 
 using namespace std;
 
-int slide(int *arr, int k)
+int slide(int *arr, int n, int k)
 {
-    int n = sizeof(arr) / 4;
+
     int i, j, Max, c;
-    Max = INT_MIN;
+    Max = 0;
     for (i = 0; i < n - k + 1; i++)
     {
         c = 0;
@@ -17,12 +17,12 @@ int slide(int *arr, int k)
     return Max;
 }
 
-int windowSlide(int *arr, int k)
+int windowSlide(int *arr, int n, int k)
 {
-    int n = sizeof(arr) / 4;
+
     queue<int> q;
     int i, j, Max, c;
-    Max = INT_MIN;
+    Max = 0;
     for (i = 0; i < n - k + 1; i++)
     {
         c = 0;
@@ -40,6 +40,9 @@ int windowSlide(int *arr, int k)
 
 int main()
 {
+
+    int arr[] = {9, 3, 4, 5, 1, 7, 8, 2, 6, 0};
+    cout << slide(arr, 10, 3) << "    " << windowSlide(arr, 10, 3) << endl;
 
     return 0;
 }
